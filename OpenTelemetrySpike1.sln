@@ -5,6 +5,14 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetrySpike1.WebApplication1", "OpenTelemetrySpike1.WebApplication1\OpenTelemetrySpike1.WebApplication1.csproj", "{116F9F75-97D6-44E7-B296-BA1A4FF1DF88}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{82944565-7C1E-4BF7-8D15-713DF1903B85}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		prometheus.yml = prometheus.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
