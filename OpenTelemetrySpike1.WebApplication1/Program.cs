@@ -14,10 +14,17 @@ otel.ConfigureResource(resource => resource
 otel.WithMetrics(metrics => metrics
 	// Metrics provider from OpenTelemetry
 	.AddAspNetCoreInstrumentation()
+	.AddHttpClientInstrumentation()
 	// Metrics provides by ASP.NET Core in .NET 8
 	.AddMeter("Microsoft.AspNetCore.Hosting")
 	.AddMeter("Microsoft.AspNetCore.Server.Kestrel")
 	.AddPrometheusExporter());
+
+builder.Services.AddHttpClient<OpenTelemetrySpike1.WebApplication1.Services.IHttpBinClient, OpenTelemetrySpike1.WebApplication1.Services.Concrete.HttpBinClient>(client =>
+{
+	client.BaseAddress = new Uri("https://httpbingo.org/");
+});
+
 
 var app = builder.Build();
 
@@ -28,10 +35,9 @@ app.MapPrometheusScrapingEndpoint();
 
 app.Run();
 
-string SendGreeting(ILogger<Program> logger)
+static async Task<string> SendGreeting(ILogger<Program> logger, OpenTelemetrySpike1.WebApplication1.Services.IHttpBinClient httpBinClient, CancellationToken cancellationToken)
 {
-	// Log a message
-	logger.LogInformation("Sending greeting");
+	bool success = await httpBinClient.UnstableAsync(.5, cancellationToken);
 
-	return "Hello World!";
+	return "Hello World! " + success;
 }
